@@ -89,10 +89,8 @@
             echo "You are welcome {$user_type}";
             break;
         case 'press':
-            echo "Greetings {$user_type}";
-            break;
-
         case 'customer':
+        case 'admin':
             echo "Hello {$user_type}";
             break;
         default:
