@@ -1,5 +1,7 @@
 <?php 
-require("../private/functions.php");
+require("../private/functions.php");// requires raises an error if file is not found and unable to be loaded
+// we use require if the file is essential for the operation of the page
+//with require, if sth goes wrong,the rest of php code wont execute...
 
 
 
