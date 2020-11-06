@@ -6,6 +6,10 @@ if(!isset($_GET['id'])){
     redirect_to(url_for('/staff/subjects/new.php'));  
 }
 $id = $_GET['id'];
+$menu_name = '';
+$position = '';
+$visible = '';
+
 if(is_post_request()){
     // Handle form values sent by new.php
 
@@ -18,9 +22,7 @@ echo "Menu name: " . $menu_name . "<br>";
 echo "Position: " . $position . "<br>";
 echo "Visible: " . $visible . "<br>";
 
-} else {
-    // redirect_to(url_for('/staff/subjects/new.php'));  
-}
+} 
 
 
 // $test = $_GET['test'] ?? '';
@@ -47,14 +49,14 @@ echo "Visible: " . $visible . "<br>";
 
         <dl>
             <dt>Menu Name</dt>
-            <dd><input type="text" name="menu_name" value=""></dd>
+            <dd><input type="text" name="menu_name" value="<?php echo h($menu_name); ?>></dd>
         </dl>
 
         <dl>
             <dt>Position</dt>
             <dd>
                 <select name="position">
-                    <option value="1">1</option>
+                    <option value="1" <?php if($position == "1"){ echo " selected";} ?>>1</option>
                 </select>
             </dd>
         </dl>
