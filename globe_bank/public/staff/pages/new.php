@@ -7,15 +7,34 @@ $visible = '';
 
 if(is_post_request()){
     // Handles form values  by new php
+    $page = [];
+    $page['subject_id'] = $_POST['subject_id'] ?? '';
+    $page['menu_name'] = $_POST['menu_name'] ?? '';
+    $page['position'] = $_POST['position'] ?? '';
+    $page['visible'] = $_POST['visible'] ?? '';
+    $page['content'] = $_POST['content'] ?? '';
 
-    $menu_name = $_POST['menu_name'] ?? '';
-    $position = $_POST['position'] ?? '';
-    $visible = $_POST['visible'] ?? '';
+    $result = insert_page($page);
+    $new_id = mysqli_insert_id($db);
+    redirect_to(url_for('/staff/pages/show.php?id=' . $new_id));
 
-    echo "Form parameters<br>";
-    echo "Menu name: " . $menu_name . "<br>";
-    echo "Position: " . $position . "<br>";
-    echo "Visible: " . $visible . "<br>";
+    // echo "Form parameters<br>";
+    // echo "Menu name: " . $menu_name . "<br>";
+    // echo "Position: " . $position . "<br>";
+    // echo "Visible: " . $visible . "<br>";
+} else {
+
+    $page = [];
+    $page['subject_id'] = '';
+    $page['menu_name'] = '';
+    $page['position'] = '';
+    $page['visible'] = '';
+    $page['content'] = '';
+    
+
+    $page_set = find_all_pages();
+    $page_count = mysqli_num_rows($page_set) + 1;
+    mysqli_free_result($page_set);
 }
 ?>
 
@@ -30,15 +49,45 @@ if(is_post_request()){
     <form action="<?php echo url_for('/staff/pages/new.php'); ?>" method="post">
 
         <dl>
+            <dt>Subject</dt>
+            <dd>
+                <select name="subject_id" id="">
+                    <?php 
+                    $subject_set = find_all_subjects();
+                    while($subject = mysql_fetch_assoc($subject_set)){
+                        echo "<option value=\"" . h($subject['id']) . "\"";
+                        if($page["subject_id"] == $subject['id']) {
+                            echo " Selected";
+                        }
+                        echo ">" . h($subject['menu_name']) . "</option>";
+                    }
+                    mysqli_free_result($subject_set);
+                    ?>
+                </select>
+            </dd>
+        </dl>
+
+
+        <dl>
             <dt>Menu Name</dt>
-            <dd><input type="text" name="menu_name" value="<?php echo h($menu_name); ?>"></dd>
+            <dd>
+                <input type="text" name="menu_name" value="<?php echo h($page['menu_name']); ?>">
+            </dd>
         </dl>
 
         <dl>
             <dt>Position</dt>
             <dd>
                 <select name="position">
-                    <option value="1"<?php if($position == "1"){ echo " selected";} ?>>1</option>
+                    <?php 
+                    for ($i=1; $i <= $page_count; $i++) { 
+                        echo "<option value=\"{$i}\"";
+                            if ($page["position"] == $i) {
+                                echo " selected";
+                            }
+                            echo ">{$i}</option>";
+                    }
+                    ?>
                 </select>
             </dd>
         </dl>

@@ -41,8 +41,8 @@ $subject_set = find_all_subjects();
                     <td><?php echo $subject['visible'] == 1 ? 'true' : 'false'; ?></td>
                     <td><?php echo h($subject['menu_name']); ?></td>
                     <td><a href="<?php echo url_for('/staff/subjects/show.php?id=' . h(u($subject['id']))); ?>" class="action">View</a></td>
-                    <td><a href="<?php echo url_for('/staff/subjects/new.php?id=' . h(u($subject['id']))); ?>" class="action">Edit</a></td>
-                    <td><a href="" class="action">Delete</a></td>
+                    <td><a href="<?php echo url_for('/staff/subjects/edit.php?id=' . h(u($subject['id']))); ?>" class="action">Edit</a></td>
+                    <td><a href="<?php echo url_for('/staff/subjects/delete.php?id=' .h(u($subject['id']))); ?>" class="action">Delete</a></td>
                 </tr>
             
             <?php

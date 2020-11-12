@@ -1,4 +1,7 @@
 <?php 
+
+//for subjects
+
 function find_all_subjects(){
     global $db;
     $sql = "select * from subjects ";
@@ -10,14 +13,6 @@ function find_all_subjects(){
     return $result;
 }
 
-function find_all_pages(){
-    global $db;
-    $sql = "select * from pages ";
-    $sql .= "order by subject_id asc";
-    $result = mysqli_query($db, $sql);
-    confirm_result_set($result);
-    return $result;
-}
 
 function find_subject_by_id($id){
     global $db;
@@ -31,5 +26,161 @@ function find_subject_by_id($id){
     return $subject; // returns an assoc array
 
 }
+
+function create_new_subject($subject){
+    global $db;
+    $sql = "insert into subjects ";
+    $sql .="(menu_name, position, visible) ";
+    $sql .="values (";
+    $sql .="'" . $subject['menu_name'] . "',";
+    $sql .="'" . $subject['position'] . "',";
+    $sql .="'" . $subject['visible'] . "'";
+    $sql .=")";
+    $result = mysqli_query($db, $sql); // for insert statement, result is true or false
+
+if ($result) {
+    return true;
+}else {
+    echo mysqli_error($db);
+    db_disconnect($db);
+    exit;
+}
+
+}
+
+function update_subject($subject){
+
+    global $db;
+
+    $sql = "update subjects set ";
+    $sql .="menu_name='" . $subject['menu_name'] . "',";
+    $sql .="position='" . $subject['position'] . "',";
+    $sql .="visible='" . $subject['visible'] . "' ";
+    $sql .="where id='" . $subject['id'] . "' ";
+    $sql .="limit 1";
+
+
+    $result = mysqli_query($db,$sql);// update statements,results are true or false
+    if ($result) {
+        return true;
+    }else {
+    echo mysqli_error($db);
+    $db_disconnect($db);
+    exit; 
+}
+}
+
+function delete_subject($id){
+    global $db;
+    $sql = "delete from subjects ";
+    $sql .="where id= '" . $id . "' ";
+    $sql .="limit 1";
+    echo $sql;
+
+    $result = mysqli_query($db,$sql);
+
+    // for delete statemnets, $result is true or false
+    if($result){
+       return true;
+    } else {
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
+}
+
+// for pages
+
+function find_all_pages(){
+    global $db;
+    $sql = "select * from pages ";
+    $sql .= "order by subject_id asc";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    return $result;
+}
+
+function find_page_by_id($id){
+    global $db;
+    $sql = "select * from pages ";
+    $sql .= "where id='" . $id ."'";
+    $result = mysqli_query($db, $sql);
+    // echo $sql;
+    confirm_result_set($result);
+    $page = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+    return $page; // returns an assoc array
+
+}
+
+function insert_page($page){
+    global $db;
+    $sql = "insert into subjects ";
+    $sql .="(menu_name, position, visible, content) ";
+    $sql .="values (";
+    $sql .="'" . $page['subject_id'] . "',";
+    $sql .="'" . $page['menu_name'] . "',";
+    $sql .="'" . $page['position'] . "',";
+    $sql .="'" . $page['visible'] . "',";
+    $sql .="'" . $page['content'] . "'";
+    $sql .=")";
+    $result = mysqli_query($db, $sql); // for insert statement, result is true or false
+
+if ($result) {
+    return true;
+}else {
+    echo mysqli_error($db);
+    db_disconnect($db);
+    exit;
+}
+
+}
+
+
+function update_page($page){
+
+    global $db;
+
+    $sql = "update pages set ";
+    $sql .="subject_id='" . $page['subject_id'] . "',";
+    $sql .="menu_name='" . $page['menu_name'] . "',";
+    $sql .="position='" . $page['position'] . "',";
+    $sql .="visible='" . $page['visible'] . "',";
+    $sql .="content='" . $page['content'] . "' ";
+    $sql .="where id='" . $page['id'] . "' ";
+    $sql .="limit 1";
+
+
+    $result = mysqli_query($db,$sql);// update statements,results are true or false
+    if ($result) {
+        return true;
+    }else {
+    echo mysqli_error($db);
+    $db_disconnect($db);
+    exit; 
+}
+}
+
+
+function delete_page($id){
+    global $db;
+    $sql = "delete from pages ";
+    $sql .="where id= '" . $id . "' ";
+    $sql .="limit 1";
+    echo $sql;
+
+    $result = mysqli_query($db,$sql);
+
+    // for delete statemnets, $result is true or false
+    if($result){
+       return true;
+    } else {
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
+}
+
+
 
 ?>
