@@ -25,7 +25,13 @@ $subject['visible'] = $_POST['visible'] ?? '';
 
 
 $result = update_subject($subject);
-redirect_to(url_for('/staff/subjects/show.php?=' . $id));
+if($result === true){
+    redirect_to(url_for('/staff/subjects/show.php?=' . $id));
+} else {
+   $errors = $result; 
+   var_dump($errors);
+}
+
 
 // echo "Form parameters<br>";
 // echo "Menu name: " . $menu_name . "<br>";
@@ -76,6 +82,8 @@ redirect_to(url_for('/staff/subjects/show.php?=' . $id));
             <dt>Position</dt>
             <dd>
                 <select name="position"> 
+
+                    
                     <?php 
                         for ($i=1; $i <= $subject_count; $i++) { 
                             echo "<option value=\"{$i}\"";

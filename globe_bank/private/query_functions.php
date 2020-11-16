@@ -100,6 +100,37 @@ function delete_subject($id){
     }
 }
 
+function validate_subject($subject){
+    $errors = [];
+
+    // menu_name
+    if(is_blank($subject['menu_name'])){
+        $errors[] = "Name canot be blank.";
+    }
+    if(!has_length($subject['menu_name'], ['min' => 2, 'max' => 255])){
+        $errors[] = "Name must be between 2 and 225 characters.";
+    }
+    //position
+    //make sure we are working with an integer
+
+    $position_int = (int) $subject['position'];
+    if($position_int <= 0){
+        $errors[] = "Position must be greater than zero";
+    }
+    if($position_int > 999){
+        $errors[] = "position must be less than 999.";
+    }
+
+    //visible
+    // make sure we are working with a string
+    $visible_str = (string) $subject['visible'];
+    if(!has_inclusion_of($visible_str, ["0","1"])){
+        $errors[] = "Visible must be true or false.";
+    }
+    return $errors;
+}
+
+
 // for pages
 
 function find_all_pages(){
@@ -192,35 +223,6 @@ function delete_page($id){
     }
 }
 
-function validate_subject($subject){
-    $errors = [];
-
-    // menu_name
-    if(is_blank($subject['menu_name'])){
-        $errors[] = "Name canot be blank.";
-    }
-    if(!has_length($subject['menu_name'], ['min' => 2, 'max' => 255])){
-        $errors[] = "Name must be between 2 and 225 characters.";
-    }
-    //position
-    //make sure we are working with an integer
-
-    $position_int = (int) $subject['position'];
-    if($position_int <= 0){
-        $errors[] = "Position must be greater than zero";
-    }
-    if($position_int > 999){
-        $errors[] = "position must be less than 999.";
-    }
-
-    //visible
-    // make sure we are working with a string
-    $visible_str = (string) $subject['visible'];
-    if(!has_inclusion_of($visible_str, ["0","1"])){
-        $errors[] = "Visible must be true or false.";
-    }
-    return $errors;
-}
 
 
 
