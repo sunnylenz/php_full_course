@@ -29,7 +29,7 @@ if($result === true){
     redirect_to(url_for('/staff/subjects/show.php?=' . $id));
 } else {
    $errors = $result; 
-   var_dump($errors);
+//    var_dump($errors);
 }
 
 
@@ -67,6 +67,11 @@ if($result === true){
 
 <div class="subject edit">
     <h1>Edit Subject</h1>
+
+
+    <?php echo display_errors($errors); ?>
+
+    
     <form action="<?php echo url_for('/staff/subjects/edit.php?id='. h(u($id)) ); ?>" method="post">
 
         <dl>
