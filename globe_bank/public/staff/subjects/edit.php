@@ -4,7 +4,7 @@ require_once('../../../private/initialize.php');
 
 
 $id = $_GET['id'];
-
+$errors = [];
 
 
 if(!isset($_GET['id'])){
@@ -41,10 +41,12 @@ if($result === true){
 }else {
     # code...
     $subject = find_subject_by_id($id);
-    $subject_set = find_all_subjects();
-    $subject_count = mysqli_num_rows($subject_set);
-    mysqli_free_result($subject_set);
+   
 }
+
+$subject_set = find_all_subjects();
+$subject_count = mysqli_num_rows($subject_set);
+mysqli_free_result($subject_set);
 
 
 // $test = $_GET['test'] ?? '';
@@ -71,7 +73,7 @@ if($result === true){
 
     <?php echo display_errors($errors); ?>
 
-    
+
     <form action="<?php echo url_for('/staff/subjects/edit.php?id='. h(u($id)) ); ?>" method="post">
 
         <dl>

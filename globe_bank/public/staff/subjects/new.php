@@ -2,6 +2,33 @@
 
 require_once('../../../private/initialize.php');
 
+if(is_post_request()){
+    // Handle form values sent by new.php
+$subject = [];
+$subject['menu_name'] = $_POST['menu_name'] ?? '';
+$subject['position'] = $_POST['position'] ?? '';
+$subject['visible'] = $_POST['visible'] ?? '';
+
+
+// echo "Form parameters<br>";
+// echo "Menu name: " . $menu_name . "<br>";
+// echo "Position: " . $position . "<br>";
+// echo "Visible: " . $visible . "<br>";
+
+    $result = create_new_subject($subject);
+    if($result === true){
+        $new_id = mysqli_insert_id($db);
+        redirect_to(url_for('/staff/subjects/show.php?=' . $new_id));
+    } else {
+        $errors = $result;
+    }
+    
+} else {
+    // redirect_to(url_for('/staff/subjects/new.php'));  
+}
+
+
+
 $subject_set = find_all_subjects();
 $subject_count = mysqli_num_rows($subject_set) + 1;
 mysqli_free_result($subject_set);
@@ -30,7 +57,10 @@ $test = $_GET['test'] ?? '';
 
 <div class="subject new">
     <h1>Create Subject</h1>
-    <form action="<?php echo url_for('/staff/subjects/create.php'); ?>" method="post">
+
+    <?php echo display_errors($errors)?>
+    
+    <form action="<?php echo url_for('/staff/subjects/new.php'); ?>" method="post">
 
         <dl>
             <dt>Menu Name</dt>
