@@ -26,8 +26,3 @@
   </ul>
   <?php mysqli_free_result($nav_subjects); ?>
 </navigation>
-
-
-
-
-find_pages_by_subject_id
