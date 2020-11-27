@@ -145,7 +145,7 @@ function find_all_pages(){
 function find_page_by_id($id){
     global $db;
     $sql = "select * from pages ";
-    $sql .= "where id='" . $id ."'";
+    $sql .= "where id='" . db_escape($id) ."'";
     $result = mysqli_query($db, $sql);
     // echo $sql;
     confirm_result_set($result);
@@ -274,7 +274,17 @@ function validate_page($page){
     return $errors;
 }
 
+function find_pages_by_subject_id($subject_id){
+    global $db;
+    $sql = "select * from pages ";
+    $sql .= "where subject_id='" . db_escape($db, $subject_id) ."' ";
+    $sql .= "order by position asc";
+    $result = mysqli_query($db, $sql);
+    // echo $sql;
+    confirm_result_set($result);
+    return $result; // returns an assoc array
 
+}
 
 
 
