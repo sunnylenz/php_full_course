@@ -4,7 +4,6 @@ require_once('../../../private/initialize.php');
 
 
 $id = $_GET['id'];
-$errors = [];
 
 
 if(!isset($_GET['id'])){

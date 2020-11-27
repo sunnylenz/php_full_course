@@ -157,6 +157,11 @@ function find_page_by_id($id){
 
 function insert_page($page){
     global $db;
+
+    $errors = validate_page($page);
+    if(!empty($errors)){
+        return $errors;
+    }
     $sql = "insert into subjects ";
     $sql .="(menu_name, position, visible, content) ";
     $sql .="values (";
@@ -182,6 +187,11 @@ if ($result) {
 function update_page($page){
 
     global $db;
+
+    $errors = validate_page($page);
+    if(!empty($errors)){
+        return $errors;
+    }
 
     $sql = "update pages set ";
     $sql .="subject_id='" . $page['subject_id'] . "',";
@@ -222,6 +232,48 @@ function delete_page($id){
         exit;
     }
 }
+
+function validate_page($page){
+    $errors = [];
+
+    // subject_id
+    if(is_blank($page['subject_id'])){
+        $errors[] = "Subject cannot be Blank.";
+    }
+
+    // menu_name
+    if(is_blank($page['menu_name'])){
+        $errors[] = "Name canot be blank.";
+    }
+    if(!has_length($page['menu_name'], ['min' => 2, 'max' => 255])){
+        $errors[] = "Name must be between 2 and 225 characters.";
+    }
+    //position
+    //make sure we are working with an integer
+
+    $position_int = (int) $page['position'];
+    if($position_int <= 0){
+        $errors[] = "Position must be greater than zero";
+    }
+    if($position_int > 999){
+        $errors[] = "position must be less than 999.";
+    }
+
+    //visible
+    // make sure we are working with a string
+    $visible_str = (string) $page['visible'];
+    if(!has_inclusion_of($visible_str, ["0","1"])){
+        $errors[] = "Visible must be true or false.";
+    }
+
+    // content
+    if(is_blank($page['content'])){
+        $errors[] = "Content cannot be blank";
+    }
+    
+    return $errors;
+}
+
 
 
 

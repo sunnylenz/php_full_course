@@ -1,6 +1,7 @@
 <?php
 
 require_once('../../../private/initialize.php');
+$errors = [];
 
 if(is_post_request()){
     // Handle form values sent by new.php
@@ -58,7 +59,7 @@ $test = $_GET['test'] ?? '';
 <div class="subject new">
     <h1>Create Subject</h1>
 
-    <?php echo display_errors($errors)?>
+    <?php echo display_errors($errors); ?>
     
     <form action="<?php echo url_for('/staff/subjects/new.php'); ?>" method="post">
 

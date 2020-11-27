@@ -3,6 +3,10 @@
 <?php $page_title = 'Staff Menu'; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
 
-<div id="content"></div>
+<div id="main">
+    <div id="page">
+    
+    </div>
+</div>
 
 <?php include(SHARED_PATH . '/staff_footer.php'); ?>
