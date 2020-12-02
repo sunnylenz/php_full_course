@@ -2,9 +2,15 @@
 
 //for subjects
 
-function find_all_subjects(){
+function find_all_subjects($options = []){
     global $db;
+
+    $visible = $options['visible'] ?? false;
+
     $sql = "select * from subjects ";
+    if($visible) {
+        $sql .= "where visible = true ";
+    }
     $sql .= "order by position asc";
     // a good check will be echoing the sql
     //echo $sql;
@@ -273,11 +279,16 @@ function validate_page($page){
     return $errors;
 }
 
-function find_pages_by_subject_id($subject_id) {
+function find_pages_by_subject_id($subject_id, $options = []) {
     global $db;
+
+    $visible = $options['visible'] ?? false;
 
     $sql = "SELECT * FROM pages ";
     $sql .= "WHERE subject_id='" . db_escape($db, $subject_id) . "' ";
+    if($visible){
+        $sql .= "and visible = true ";
+    }
     $sql .= "ORDER BY position ASC";
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
