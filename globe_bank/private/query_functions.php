@@ -20,16 +20,22 @@ function find_all_subjects($options = []){
 }
 
 
-function find_subject_by_id($id){
+function find_subject_by_id($id, $options = []){
     global $db;
+
+    $visible = $options['visible'] ?? false;
+
     $sql = "select * from subjects ";
-    $sql .= "where id='" . db_escape($db, $id) ."'";
+    $sql .= "where id='" . db_escape($db, $id) ."' ";
+    if($visible){
+        $sql .="and visible = true";
+    }
     $result = mysqli_query($db, $sql);
     // echo $sql;
     confirm_result_set($result);
     $subject = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
-    return $subject; // returns an assoc array
+    return $subject; // returns an assoc array 
 
 }
 
@@ -148,11 +154,16 @@ function find_all_pages(){
     return $result;
 }
 
-function find_page_by_id($id) {
+function find_page_by_id($id, $options = []) {
     global $db;
 
+    $visible = $options['visible'] ?? false;
+
     $sql = "SELECT * FROM pages ";
-    $sql .= "WHERE id='" . db_escape($db, $id) . "'";
+    $sql .= "WHERE id='" . db_escape($db, $id) . "' ";
+    if($visible){
+        $sql .="and visible = true";
+    }
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
     $page = mysqli_fetch_assoc($result);
