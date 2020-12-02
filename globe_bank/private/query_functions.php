@@ -142,17 +142,16 @@ function find_all_pages(){
     return $result;
 }
 
-function find_page_by_id($id){
+function find_page_by_id($id) {
     global $db;
-    $sql = "select * from pages ";
-    $sql .= "where id='" . db_escape($db,$id) ."'";
+
+    $sql = "SELECT * FROM pages ";
+    $sql .= "WHERE id='" . db_escape($db, $id) . "'";
     $result = mysqli_query($db, $sql);
-    // echo $sql;
     confirm_result_set($result);
     $page = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
-    return $page; // returns an assoc array
-
+    return $page; // returns an assoc. array
 }
 
 function insert_page($page){
@@ -274,16 +273,15 @@ function validate_page($page){
     return $errors;
 }
 
-function find_pages_by_subject_id($subject_id){
+function find_pages_by_subject_id($subject_id) {
     global $db;
-    $sql = "select * from pages ";
-    $sql .= "where subject_id='" . db_escape($db, $subject_id) ."' ";
-    $sql .= "order by position asc";
-    $result = mysqli_query($db, $sql);
-    // echo $sql;
-    confirm_result_set($result);
-    return $result; // returns an assoc array
 
+    $sql = "SELECT * FROM pages ";
+    $sql .= "WHERE subject_id='" . db_escape($db, $subject_id) . "' ";
+    $sql .= "ORDER BY position ASC";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    return $result;
 }
 
 
