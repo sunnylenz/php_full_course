@@ -3,6 +3,9 @@ ob_start(); // output buffering is turned on
 //Assign file paths to PHP constants
 // __FILE__ returns the current path to this file
 // dirname() returns the path to the current directory
+
+session_start(); // turn on sessions
+
 define("PRIVATE_PATH", dirname(__FILE__));
 define("PROJECT_PATH", dirname(PRIVATE_PATH));
 define("PUBLIC_PATH", PROJECT_PATH . '/public');
