@@ -1,7 +1,6 @@
 <?php
 
 require_once('../../../private/initialize.php');
-$errors = [];
 
 if(is_post_request()){
     // Handle form values sent by new.php
@@ -11,14 +10,10 @@ $subject['position'] = $_POST['position'] ?? '';
 $subject['visible'] = $_POST['visible'] ?? '';
 
 
-// echo "Form parameters<br>";
-// echo "Menu name: " . $menu_name . "<br>";
-// echo "Position: " . $position . "<br>";
-// echo "Visible: " . $visible . "<br>";
-
     $result = create_new_subject($subject);
     if($result === true){
         $new_id = mysqli_insert_id($db);
+        $_SESSION['message'] = 'The subject was created successfully.';
         redirect_to(url_for('/staff/subjects/show.php?=' . $new_id));
     } else {
         $errors = $result;

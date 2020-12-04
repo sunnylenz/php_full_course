@@ -59,4 +59,19 @@
         return $output;
     }
 
+    function get_and_clear_session_message(){
+        if(isset($_SESSION['messsge']) && $_SESSION['message'] != ''){
+            $msg = $_SESSION['message'];
+            unset($_SESSION['mesage']);
+            return $msg;
+        }
+    }
+
+    function display_session_message(){
+        $msg = get_and_clear_session_messaage();
+        if(!is_blank($msg)){
+            return '<div id="message">' . h($msg) . '</div>';
+        }
+    }
+
 ?>
