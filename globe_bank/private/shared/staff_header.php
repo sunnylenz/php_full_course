@@ -19,6 +19,8 @@
     <navigation>
     <ul>
     <li>User: <?php echo $_SESSION['username'] ?? '';?></li>
+    <li>ID: <?php $_SESSION['admin_id'] ?? '';?></li>
+    <li>Last Login: <?php $_SESSION['last_login'] ?? '';?></li>
     <li><a href="<?php echo url_for('/staff/index.php'); ?>">Menu</a></li>
     <li><a href="<?php echo url_for('/staff/logout.php'); ?>">Logout</a></li>
     </ul>

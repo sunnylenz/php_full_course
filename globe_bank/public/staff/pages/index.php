@@ -3,6 +3,8 @@
 
 <?php 
 
+require_login();
+
 $pages_set = find_all_pages();
 
 // $pages = [
